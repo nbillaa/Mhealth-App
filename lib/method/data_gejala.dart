@@ -1,0 +1,47 @@
+import 'gejala.dart';
+import 'rule.dart';
+
+List<Gejala> gejalaList = [
+  Gejala(id: 'GE01', pertanyaan: 'Keadaan perasaan sedih (sedih, putus asa, tak berdaya, tak berguna)', cfPakar: 0.8),
+  Gejala(id: 'GE02', pertanyaan: 'Merasa kehilangan kegembiraan dan minat dalam melakukan kegiatan, hobi, atau pekerjaan', cfPakar: 0.8),
+  Gejala(id: 'GE03', pertanyaan: 'Berkurangnya energi yang menuju meningkatnya keadaan mudah lelah dan menurunnya aktivitas', cfPakar: 0.8),
+  Gejala(id: 'GE04', pertanyaan: 'Memiliki perasaan bersalah atau perasaan bersalah yang berlebihan', cfPakar: 0.8),
+  Gejala(id: 'GE05', pertanyaan: 'Merasakan kegelisahan (biasanya merasa tegang dan cemas berlebihan)', cfPakar: 0.6),
+  Gejala(id: 'GE06', pertanyaan: 'Mudah tegang, mudah merasa tersinggung, dan mudah terkejut', cfPakar: 0.6),
+  Gejala(id: 'GE07', pertanyaan: 'Sukar konsenterasi dan perhatian berkurang', cfPakar: 0.6),
+  Gejala(id: 'GE08', pertanyaan: 'Merasa kehilangan nafsu makan atau nafsu makan berkurang', cfPakar: 0.6),
+  Gejala(id: 'GE09', pertanyaan: 'Memiliki perasaan bahwa diri sendiri tidak berharga', cfPakar: 0.6),
+  Gejala(id: 'GE10', pertanyaan: 'Pandangan masa depan yang suram dan pesimistis', cfPakar: 0.8),
+  Gejala(id: 'GE11', pertanyaan: 'Selalu merasa berburuk sangka terhadap orang lain, atau selalu merasa orang lain mempunyai maksud yang jahat', cfPakar: 0.4),
+  Gejala(id: 'GE12', pertanyaan: 'Merasakan perasaan cemas, firasat buruk, dan takut akan pikiran sendiri', cfPakar: 0.8),
+  Gejala(id: 'GE13', pertanyaan: 'Tangan atau anggota tubuh bergetar', cfPakar: 0.8),
+  Gejala(id: 'GE14', pertanyaan: 'Pusing atau terasa sakit di bagian kepala', cfPakar: 0.4),
+  Gejala(id: 'GE15', pertanyaan: 'Memiliki kesulitan untuk tidur atau gangguan tidur', cfPakar: 0.8),
+  Gejala(id: 'GE16', pertanyaan: 'Daya ingat buruk ', cfPakar: 0.6),
+  Gejala(id: 'GE17', pertanyaan: 'Memiliki gejala somatic (otot), seperti terasa sakit dan nyeri otot-otot, kaku, kedutan otot, gigi gemeruntuk, dan suara tidak stabil', cfPakar: 0.8),
+  Gejala(id: 'GE18', pertanyaan: 'Memiliki gangguan makan seperti sulit menelan, perut melilit, mual, muntah, kembung, kehilangan berat badan, dan gangguan pencernaan', cfPakar: 0.6),
+  Gejala(id: 'GE19', pertanyaan: 'Merasakan tertekan di dada, napas pendek/sesak, dan perasaan tercekik', cfPakar: 0.6),
+  Gejala(id: 'GE20', pertanyaan: 'Memiliki gejala otonom seperti jantung berdebar-debar, telapak tangan basah atau dingin, mulut kering, muka merah, dan mudah berkeringat', cfPakar: 0.8),
+  Gejala(id: 'GE21', pertanyaan: 'Panik, takut, dan menghindar ketika berada di tempat umum atau di tengah keramaian', cfPakar: 0.6),
+  Gejala(id: 'GE22', pertanyaan: 'Khawatir atau cemas karena meyakini bahwa akan ada suatu hal buruk yang terjadi (bencana, penyakit, kematian) akan memisahkan dirinya dari sesosok yang akrab dengannya (orang tua, saudara, teman)', cfPakar: 0.6),
+  Gejala(id: 'GE23', pertanyaan: 'Parestesia (mati rasa atau kesemutan)', cfPakar: 0.4),
+  Gejala(id: 'GE24', pertanyaan: 'Derealisasi (merasa tidak nyata) atau depersonalisasi (merasa dipisahkan dari tubuhnya)', cfPakar: 0.4),
+  Gejala(id: 'GE25', pertanyaan: 'Merasa takut kehilangan kendali atau menjadi gila', cfPakar: 0.4),
+  Gejala(id: 'GE26', pertanyaan: 'Takut akan mati', cfPakar: 0.4),
+  Gejala(id: 'GE27', pertanyaan: 'Perubahan suasana hati yang tidak normal ', cfPakar: 0.8),
+  Gejala(id: 'GE28', pertanyaan: 'Aktivitas atau energi meningkat secara tidak normal dan terus-menerus', cfPakar: 0.8),
+  Gejala(id: 'GE29', pertanyaan: 'Terlalu percaya diri', cfPakar: 0.8),
+  Gejala(id: 'GE30', pertanyaan: 'Lebih banyak berbicara dari biasanya atau tekanan untuk terus berbicara', cfPakar: 0.6),
+  Gejala(id: 'GE31', pertanyaan: 'Melontarkan banyak ide yang membuat pikiran berlomba-lomba', cfPakar: 0.6),
+  Gejala(id: 'GE32', pertanyaan: 'Gangguan perhatian (perhatian terlalu mudah teralihkan)', cfPakar:0.4),
+  Gejala(id: 'GE33', pertanyaan: 'Meningkatnya kegiatan untuk mencapai suatu tujuan (baik secara sosial, di tempat kerja atau sekolah)', cfPakar: 0.6),
+  Gejala(id: 'GE34', pertanyaan: 'Keterlibatan yang berlebihan dalam kegiatan yang berpotensi untuk menyakitkan (misalnya menghamburkan uang)', cfPakar: 0.4),
+  Gejala(id: 'GE35', pertanyaan: 'Penurunan atau peningkatan nafsu makan hampir setiap hari (gagal mencapai berat badan yang diharapkan)', cfPakar: 0.4),
+  Gejala(id: 'GE36', pertanyaan: 'Pikiran tentang kematian yang (bukan hanya takut mati), keinginan untuk bunuh diri, atau percobaan bunuh diri.', cfPakar: 0.4), 
+];
+
+List<Rule> rulesList = [
+  Rule(gejalaIds: ['GE01', 'GE02', ' GE03', 'GE04', 'GE06', 'GE07', 'GE08', 'GE09', 'GE10', 'GE11', 'GE15', 'GE36'], hasil: 'Depresi'),
+  Rule(gejalaIds: ['GE02', 'GE05', 'GE07', 'GE12', 'GE13', 'GE14', 'GE15', 'GE16', 'GE17', 'GE18', 'GE19', 'GE20', 'GE21', 'GE22', 'GE23', 'GE24', 'GE25', 'GE26'], hasil: 'Anxiety'),
+  Rule(gejalaIds: ['GE01', 'GE02', 'GE03', 'GE04', 'GE07', 'GE09', 'GE15', 'GE27', 'GE28', 'GE29', 'GE30', 'GE31', 'GE32', 'GE33', 'GE34', 'GE35', 'GE36'], hasil: 'Bipolar'),
+];
