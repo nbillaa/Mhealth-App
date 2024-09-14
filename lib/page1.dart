@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart'; // Import Firebase Auth untuk mendapatkan ID pengguna
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -95,6 +95,7 @@ class _PertanyaanPageState extends State<PertanyaanPage> {
               child: ElevatedButton(
                 onPressed: () async {
                   await _saveAnswers();
+                  // ignore: use_build_context_synchronously
                   Navigator.pushNamed(context, 'PertanyaanPage2');
                 },
                 style: ElevatedButton.styleFrom(
@@ -172,9 +173,11 @@ class _PertanyaanPageState extends State<PertanyaanPage> {
 
   Future<void> _saveAnswers() async {
     final userId = _auth.currentUser?.uid ?? 'guest'; // Gunakan ID pengguna yang login
+
+    // Menggunakan kode gejala yang diimpor dari data_gejala.dart
     final Map<String, String> answers = {
-      'question1': _selectedOption1 ?? '',
-      'question2': _selectedOption2 ?? '',
+      'GE01': _selectedOption1 ?? '', // Menggunakan kode gejala dari data_gejala.dart
+      'GE04': _selectedOption2 ?? '',
       // Tambahkan jawaban dari halaman lain jika diperlukan
     };
 

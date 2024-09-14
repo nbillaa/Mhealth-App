@@ -51,6 +51,7 @@ flutter {
 
 dependencies {
     
-    implementation 'com.microsoft.onnxruntime:onnxruntime:1.12.1'
+    implementation 'com.microsoft.onnxruntime:onnxruntime-training-android:1.15.1'
+
  // Sesuaikan dengan versi terbaru
 }

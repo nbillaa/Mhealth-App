@@ -37,6 +37,7 @@ import 'package:mental_health_app/page9.dart';
 import 'package:mental_health_app/privasi.dart';
 import 'package:mental_health_app/profil.dart';
 import 'package:mental_health_app/result.dart';
+import 'package:mental_health_app/result_baru.dart';
 import 'package:mental_health_app/riwayatdeteksi.dart';
 import 'package:mental_health_app/setting.dart';
 import 'package:mental_health_app/sign.dart';
@@ -88,6 +89,7 @@ Map<String, WidgetBuilder> routes = {
   DetectionResultScreen2.routeName:(context) => const DetectionResultScreen2(),
   DetectionResultScreen3.routeName:(context) => const DetectionResultScreen3(),
   HasilDeteksi.routeName:(context) => const HasilDeteksi(),
+  ResultPage.routeName:(context) => const ResultPage(),
   LupaPasswordScreen.routeName: (context) =>  LupaPasswordScreen(),
   //MainPage.routeName:(context) => const MainPage(),
 };

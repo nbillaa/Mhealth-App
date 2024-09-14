@@ -16,25 +16,23 @@ class _ResultPageState extends State<ResultPage> {
   final FirestoreService _firestoreService = FirestoreService();
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  String _diagnosis = '';
-  double _certaintyFactor = 0.0;
+  String _onnxPrediction = ''; // Variabel untuk menyimpan hasil prediksi ONNX
   bool _isLoading = true;
 
-  // Fungsi untuk mengambil hasil diagnosis dari Firestore
-  Future<void> _getDiagnosisResult() async {
+  // Fungsi untuk mengambil hasil prediksi dari Firestore
+  Future<void> _getOnnxPrediction() async {
     try {
       final userId = _auth.currentUser?.uid ?? 'guest';
-      final diagnosisData = await _firestoreService.getDiagnosisResult(userId);
+      final diagnosisData = await _firestoreService.getOnnxPrediction(userId);
+      
       setState(() {
-        _diagnosis = diagnosisData['finalDiagnosis'] ?? 'Tidak ada diagnosis';
-        _certaintyFactor = diagnosisData['certaintyFactor'] ?? 0.0;
+        _onnxPrediction = diagnosisData['predictionResult'] ?? 'Tidak ada hasil prediksi';
         _isLoading = false;
       });
     } catch (e) {
-      print('Gagal mengambil hasil diagnosis: $e');
+      print('Gagal mengambil hasil prediksi ONNX: $e');
       setState(() {
-        _diagnosis = 'Error';
-        _certaintyFactor = 0.0;
+        _onnxPrediction = 'Error';
         _isLoading = false;
       });
     }
@@ -43,7 +41,7 @@ class _ResultPageState extends State<ResultPage> {
   @override
   void initState() {
     super.initState();
-    _getDiagnosisResult();
+    _getOnnxPrediction(); // Panggil fungsi untuk mengambil hasil prediksi ONNX saat inisialisasi
   }
 
   @override
@@ -76,14 +74,14 @@ class _ResultPageState extends State<ResultPage> {
                   ),
                   SizedBox(height: 20),
                   Text(
-                    'Penyakit yang terdeteksi:',
+                    'Hasil Prediksi ONNX:',
                     style: GoogleFonts.poppins(
                       fontSize: 18,
                     ),
                   ),
                   SizedBox(height: 10),
                   Text(
-                    _diagnosis,
+                    _onnxPrediction,
                     style: GoogleFonts.poppins(
                       fontSize: 24,
                       fontWeight: FontWeight.w700,
@@ -91,22 +89,6 @@ class _ResultPageState extends State<ResultPage> {
                     ),
                   ),
                   SizedBox(height: 30),
-                  Text(
-                    'Tingkat Kepastian Diagnosis:',
-                    style: GoogleFonts.poppins(
-                      fontSize: 18,
-                    ),
-                  ),
-                  SizedBox(height: 10),
-                  Text(
-                    '${(_certaintyFactor * 100).toStringAsFixed(2)}%',
-                    style: GoogleFonts.poppins(
-                      fontSize: 28,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.green,
-                    ),
-                  ),
-                  SizedBox(height: 40),
                   ElevatedButton(
                     onPressed: () {
                       Navigator.pop(context); // Kembali ke halaman sebelumnya
