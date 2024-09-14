@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -13,6 +15,9 @@ class _PertanyaanPage12State extends State<PertanyaanPage12> {
   String? _selectedOption1;
   String? _selectedOption2;
 
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -88,7 +93,9 @@ class _PertanyaanPage12State extends State<PertanyaanPage12> {
             Padding(
               padding: const EdgeInsets.only(bottom: 5.0),
               child: ElevatedButton(
-                onPressed: () {
+                onPressed: () async {
+                  await _saveAnswers(); // Simpan jawaban sebelum melanjutkan
+                  // ignore: use_build_context_synchronously
                   Navigator.pushNamed(context, 'PertanyaanPage13');
                 },
                 style: ElevatedButton.styleFrom(
@@ -162,5 +169,19 @@ class _PertanyaanPage12State extends State<PertanyaanPage12> {
       activeColor: const Color(0xFF004AAD),
       visualDensity: const VisualDensity(horizontal: 0, vertical: -4),
     );
+  }
+  Future<void> _saveAnswers() async {
+    final userId = _auth.currentUser?.uid ?? 'guest'; // Gunakan ID pengguna yang login
+    final Map<String, String> answers = {
+      'GE03': _selectedOption1 ?? '',
+      'GE18': _selectedOption2 ?? '',
+      // Tambahkan jawaban dari halaman lain jika diperlukan
+    };
+
+    try {
+      await _firestore.collection('answers').doc(userId).set(answers, SetOptions(merge: true));
+    } catch (e) {
+      print("Failed to save answers: $e");
+    }
   }
 }

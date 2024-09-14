@@ -173,8 +173,8 @@ class _PertanyaanPage2State extends State<PertanyaanPage2> {
   Future<void> _saveAnswers() async {
     final userId = _auth.currentUser?.uid ?? 'guest'; // Gunakan ID pengguna yang login
     final Map<String, String> answers = {
-      'question3': _selectedOption1 ?? '',
-      'question4': _selectedOption2 ?? '',
+      'GE02': _selectedOption1 ?? '',
+      'GE05': _selectedOption2 ?? '',
       // Tambahkan jawaban dari halaman lain jika diperlukan
     };
 

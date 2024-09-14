@@ -22,4 +22,6 @@ class OnnxModel {
       return {};
     }
   }
+
+  runModelWithAnswers(Map<String, int> numericAnswers) {}
 }
