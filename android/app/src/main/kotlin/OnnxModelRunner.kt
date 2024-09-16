@@ -5,7 +5,7 @@ import ai.onnxruntime.OrtEnvironment
 import ai.onnxruntime.OrtException
 import ai.onnxruntime.OrtSession
 import android.util.Log
-import java.util.Collections // Tambahkan ini untuk mengimpor Collections
+import java.util.Collections
 
 class OnnxModelRunner {
     private var session: OrtSession? = null
@@ -13,7 +13,7 @@ class OnnxModelRunner {
 
     init {
         try {
-            session = env.createSession("model_xgboost.onnx") // Ganti dengan path ke model ONNX
+            session = env.createSession("model_xgboost.onnx") // Sesuaikan path model ONNX
         } catch (e: OrtException) {
             Log.e("OnnxModelRunner", "Failed to create ONNX session", e)
         }
@@ -33,17 +33,4 @@ class OnnxModelRunner {
             null
         }
     }
-
-    // Forward Chaining and Certainty Factor methods
-    fun applyForwardChainingAndCF(gejala: Map<String, Float>, rules: List<Rule>): Map<String, Float> {
-        val results = mutableMapOf<String, Float>()
-
-        // Implementasikan logika Forward Chaining dan Certainty Factor di sini
-        // Contoh placeholder
-        // results["ExampleResult"] = 1.0f
-
-        return results
-    }
 }
-
-data class Rule(val condition: String, val result: String, val cf: Float)

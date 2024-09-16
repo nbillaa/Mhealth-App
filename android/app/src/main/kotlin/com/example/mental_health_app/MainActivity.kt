@@ -16,7 +16,8 @@ class MainActivity : FlutterActivity() {
         MethodChannel(flutterEngine.dartExecutor.binaryMessenger, CHANNEL).setMethodCallHandler { call, result ->
             when (call.method) {
                 "runModel" -> {
-                    val input = call.argument<FloatArray>("input")
+                    // Mengambil data sebagai List<Double>
+                    val input = call.argument<List<Double>>("input")
                     if (input != null) {
                         val output = onnxModelRunner.runModel(input)
                         if (output != null) {
@@ -26,26 +27,6 @@ class MainActivity : FlutterActivity() {
                         }
                     } else {
                         result.error("ERROR", "Invalid input", null)
-                    }
-                }
-                "applyForwardChainingAndCF" -> {
-                    val gejala = call.argument<Map<String, Float>>("gejala") ?: emptyMap()
-                    val rules = call.argument<List<Map<String, Any>>>("rules")?.mapNotNull {
-                        val condition = it["condition"] as? String
-                        val result = it["result"] as? String
-                        val cf = (it["cf"] as? Number)?.toFloat()
-                        if (condition != null && result != null && cf != null) {
-                            Rule(condition, result, cf)
-                        } else {
-                            null
-                        }
-                    } ?: emptyList()
-
-                    val chainingResult = onnxModelRunner.applyForwardChainingAndCF(gejala, rules)
-                    if (chainingResult != null) {
-                        result.success(chainingResult)
-                    } else {
-                        result.error("ERROR", "Failed to apply rules", null)
                     }
                 }
                 else -> result.notImplemented()

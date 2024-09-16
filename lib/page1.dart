@@ -1,7 +1,6 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mental_health_app/method/answer.dart';
 
 class PertanyaanPage extends StatefulWidget {
   static String routeName = 'PertanyaanPage';
@@ -11,12 +10,12 @@ class PertanyaanPage extends StatefulWidget {
   _PertanyaanPageState createState() => _PertanyaanPageState();
 }
 
+// Objek Answer global untuk menyimpan semua jawaban
+Answer userAnswers = Answer(answers: {});
+
 class _PertanyaanPageState extends State<PertanyaanPage> {
   String? _selectedOption1;
   String? _selectedOption2;
-
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -46,8 +45,7 @@ class _PertanyaanPageState extends State<PertanyaanPage> {
               fit: BoxFit.fitWidth,
               child: Container(
                 alignment: Alignment.center,
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                 margin: const EdgeInsets.only(right: 20),
                 decoration: BoxDecoration(
                   color: const Color(0xFF4E91EA),
@@ -93,15 +91,16 @@ class _PertanyaanPageState extends State<PertanyaanPage> {
             Padding(
               padding: const EdgeInsets.only(bottom: 5.0),
               child: ElevatedButton(
-                onPressed: () async {
-                  await _saveAnswers();
-                  // ignore: use_build_context_synchronously
+                onPressed: () {
+                  // Simpan jawaban menggunakan userAnswers
+                  _saveAnswers();
+                  
+                  // Lanjut ke halaman berikutnya
                   Navigator.pushNamed(context, 'PertanyaanPage2');
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFF004AAD),
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 120, vertical: 12),
+                  padding: const EdgeInsets.symmetric(horizontal: 120, vertical: 12),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30.0),
                   ),
@@ -171,20 +170,9 @@ class _PertanyaanPageState extends State<PertanyaanPage> {
     );
   }
 
-  Future<void> _saveAnswers() async {
-    final userId = _auth.currentUser?.uid ?? 'guest'; // Gunakan ID pengguna yang login
-
-    // Menggunakan kode gejala yang diimpor dari data_gejala.dart
-    final Map<String, String> answers = {
-      'GE01': _selectedOption1 ?? '', // Menggunakan kode gejala dari data_gejala.dart
-      'GE04': _selectedOption2 ?? '',
-      // Tambahkan jawaban dari halaman lain jika diperlukan
-    };
-
-    try {
-      await _firestore.collection('answers').doc(userId).set(answers, SetOptions(merge: true));
-    } catch (e) {
-      print("Failed to save answers: $e");
-    }
+  void _saveAnswers() {
+    // Simpan jawaban ke dalam userAnswers
+    userAnswers.updateAnswer('GE01', _selectedOption1 ?? '');
+    userAnswers.updateAnswer('GE04', _selectedOption2 ?? '');
   }
 }

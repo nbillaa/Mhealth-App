@@ -1,7 +1,6 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart'; // Import Firebase Auth untuk mendapatkan ID pengguna
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mental_health_app/method/answer.dart';
 
 class PertanyaanPage2 extends StatefulWidget {
   static String routeName = 'PertanyaanPage2';
@@ -11,12 +10,11 @@ class PertanyaanPage2 extends StatefulWidget {
   _PertanyaanPage2State createState() => _PertanyaanPage2State();
 }
 
+Answer userAnswers = Answer(answers: {});
+
 class _PertanyaanPage2State extends State<PertanyaanPage2> {
   String? _selectedOption1;
   String? _selectedOption2;
-
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -93,8 +91,10 @@ class _PertanyaanPage2State extends State<PertanyaanPage2> {
               padding: const EdgeInsets.only(bottom: 5.0),
               child: ElevatedButton(
                 onPressed: () async {
-                  await _saveAnswers(); // Simpan jawaban sebelum melanjutkan
-                  // ignore: use_build_context_synchronously
+                  // Simpan jawaban menggunakan userAnswers
+                  _saveAnswers();
+                  
+                  // Lanjut ke halaman berikutnya
                   Navigator.pushNamed(context, 'PertanyaanPage3');
                 },
                 style: ElevatedButton.styleFrom(
@@ -170,18 +170,9 @@ class _PertanyaanPage2State extends State<PertanyaanPage2> {
     );
   }
 
-  Future<void> _saveAnswers() async {
-    final userId = _auth.currentUser?.uid ?? 'guest'; // Gunakan ID pengguna yang login
-    final Map<String, String> answers = {
-      'GE02': _selectedOption1 ?? '',
-      'GE05': _selectedOption2 ?? '',
-      // Tambahkan jawaban dari halaman lain jika diperlukan
-    };
-
-    try {
-      await _firestore.collection('answers').doc(userId).set(answers, SetOptions(merge: true));
-    } catch (e) {
-      print("Failed to save answers: $e");
-    }
+  void _saveAnswers() {
+    // Simpan jawaban ke dalam userAnswers
+    userAnswers.updateAnswer('GE01', _selectedOption1 ?? '');
+    userAnswers.updateAnswer('GE04', _selectedOption2 ?? '');
   }
 }

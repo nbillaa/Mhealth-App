@@ -89,7 +89,7 @@ Map<String, WidgetBuilder> routes = {
   DetectionResultScreen2.routeName:(context) => const DetectionResultScreen2(),
   DetectionResultScreen3.routeName:(context) => const DetectionResultScreen3(),
   HasilDeteksi.routeName:(context) => const HasilDeteksi(),
-  ResultPage.routeName:(context) => const ResultPage(),
+  ResultPage.routeName:(context) => const ResultPage(onnxPrediction: '', xgboostPrediction: '', userId: '',),
   LupaPasswordScreen.routeName: (context) =>  LupaPasswordScreen(),
   //MainPage.routeName:(context) => const MainPage(),
 };

@@ -1,4 +1,4 @@
-class Answer {
+/* class Answer {
   final String GE01;
   final String GE02;
   final String GE03;
@@ -157,5 +157,49 @@ class Answer {
       'GE35': GE35,
       'GE36': GE36,
     };
+  }
+}
+ */
+// File: answer_model.dart
+
+// File: answer_model.dart
+
+class Answer {
+  Map<String, String> answers;
+
+  Answer({required this.answers});
+
+  // Method untuk memperbarui jawaban dari setiap pertanyaan
+  void updateAnswer(String questionId, String answer) {
+    answers[questionId] = answer;
+  }
+
+  // Method untuk mengonversi semua jawaban ke format numerik
+  Map<String, int> toNumeric() {
+    Map<String, int> numericAnswers = {};
+
+    answers.forEach((key, value) {
+      numericAnswers[key] = convertAnswerToNumeric(value);
+    });
+
+    return numericAnswers;
+  }
+
+  // Method helper untuk konversi jawaban ke angka
+  int convertAnswerToNumeric(String answer) {
+    switch (answer) {
+      case 'Sangat sering':
+        return 4;
+      case 'Sering':
+        return 3;
+      case 'Kadang-kadang':
+        return 2;
+      case 'Jarang':
+        return 1;
+      case 'Tidak pernah':
+        return 0;
+      default:
+        return 0;
+    }
   }
 }

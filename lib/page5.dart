@@ -1,7 +1,6 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mental_health_app/method/answer.dart';
 
 class PertanyaanPage5 extends StatefulWidget {
   static String routeName = 'PertanyaanPage5';
@@ -11,13 +10,12 @@ class PertanyaanPage5 extends StatefulWidget {
   _PertanyaanPage5State createState() => _PertanyaanPage5State();
 }
 
+Answer userAnswers = Answer(answers: {});
+
 class _PertanyaanPage5State extends State<PertanyaanPage5> {
   String? _selectedOption1;
   String? _selectedOption2;
   String? _selectedOption3;
-
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -103,9 +101,11 @@ class _PertanyaanPage5State extends State<PertanyaanPage5> {
             Padding(
               padding: const EdgeInsets.only(bottom: 20.0),
               child: ElevatedButton(
-                onPressed: () async {
-                  await _saveAnswers(); // Simpan jawaban sebelum melanjutkan
-                  // ignore: use_build_context_synchronously
+                onPressed: () {
+                  // Simpan jawaban menggunakan userAnswers
+                  _saveAnswers();
+                  
+                  // Lanjut ke halaman berikutnya
                   Navigator.pushNamed(context, 'Tahap2Page');
                 },
                 style: ElevatedButton.styleFrom(
@@ -177,19 +177,10 @@ class _PertanyaanPage5State extends State<PertanyaanPage5> {
       visualDensity: const VisualDensity(horizontal: 0, vertical: -4),
     );
   }
-  Future<void> _saveAnswers() async {
-    final userId = _auth.currentUser?.uid ?? 'guest'; // Gunakan ID pengguna yang login
-    final Map<String, String> answers = {
-      'GE11': _selectedOption1 ?? '',
-      'GE21': _selectedOption2 ?? '',
-      'GE22': _selectedOption3 ?? '',
-      // Tambahkan jawaban dari halaman lain jika diperlukan
-    };
-
-    try {
-      await _firestore.collection('answers').doc(userId).set(answers, SetOptions(merge: true));
-    } catch (e) {
-      print("Failed to save answers: $e");
-    }
+  void _saveAnswers() {
+    // Simpan jawaban ke dalam userAnswers
+    userAnswers.updateAnswer('GE11', _selectedOption1 ?? '');
+    userAnswers.updateAnswer('GE21', _selectedOption2 ?? '');
+    userAnswers.updateAnswer('GE22', _selectedOption3 ?? '');
   }
 }
